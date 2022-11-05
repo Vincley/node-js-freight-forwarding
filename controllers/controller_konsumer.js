@@ -40,12 +40,14 @@ module.exports = {
 
     add(req,res){
         let dataAdd = {
+            id : req.body.id,
             nama : req.body.nama,
         }
         let id_pengangkutan = req.body.id_pengangkutan
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query(`insert into konsumer set ?) `,
+            conn.query(`insert into konsumer set ?,
+            id_pengangkutan = (select id from pengangkutan where id = ?)`,
             [dataAdd, id_pengangkutan],(error, results) => {
                 if(error) throw error;
                 res.send({
@@ -66,8 +68,9 @@ module.exports = {
         let id_pengangkutan = req.body.id_pengangkutan
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query(`update into konsumer set ?)`,
-            [dataUpdate, id, id_pengangkutan],(error, results) => {
+            conn.query(`update konsumer set ?,
+            id_pengangkutan = (select id from pengangkutan where id = ?) where id = ?`,
+            [dataUpdate, id_pengangkutan, id],(error, results) => {
                 if(error) throw error;
                 res.send({
                     success : true,
