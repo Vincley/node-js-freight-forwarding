@@ -1,2 +1,2 @@
-# node-js-ekspedisi-barang
-Sistem informasi tentang ekspedisi barang (NodeJS)
+# Freight Forwarder
+RESTFUL API project using NodeJS and MySQL.
