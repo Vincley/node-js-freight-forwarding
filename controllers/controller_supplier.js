@@ -40,7 +40,8 @@ module.exports = {
 
     add(req,res){
         let dataAdd = {
-            nama : req.body.nama,
+            id : req.body.id,
+            nama : req.body.nama
         }
         let id_produk = req.body.id_produk
         pool.getConnection((err, conn) => {
@@ -67,9 +68,9 @@ module.exports = {
         let id_produk = req.body.id_produk
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query(`update into supplier set ?,
-            id_produk = (select id from produk where id = ?)`,
-            [dataUpdate, id, id_produk],(error, results) => {
+            conn.query(`update supplier set ?,
+            id_produk = (select id from produk where id= ?) where id = ?`,
+            [dataUpdate, id_produk, id],(error, results) => {
                 if(error) throw error;
                 res.send({
                     success : true,
