@@ -49,10 +49,10 @@ module.exports = {
         let id_konsumer = req.body.id_konsumer
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query(`insert into ekspedisi set ?, 
-            id_pengangkutan = (select id from pengangkutan where id = ? ), 
-            id_supplier = (select id from supplier where id = ? ), 
-            id_konsumer = (select id from konsumer where id = ? )`,
+            conn.query(`insert into ekspedisi set ?
+            id_pengangkutan = (select id from pengangkutan where id = ?), 
+            id_supplier = (select id from supplier where id = ?), 
+            id_konsumer = (select id from konsumer where id = ?)`,
             [dataAdd, id_pengangkutan, id_supplier, id_konsumer],(error, results) => {
                 if(error) throw error;
                 res.send({
@@ -77,11 +77,11 @@ module.exports = {
         let id_konsumer = req.body.id_konsumer
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query(`update into ekspedisi set ?, 
+            conn.query(`update ekspedisi set ?,
             id_pengangkutan = (select id from pengangkutan where id = ?), 
             id_supplier = (select id from supplier where id = ? ), 
             id_konsumer = (select id from konsumer where id = ?) where nomor = ?`,
-            [dataUpdate, nomor, id_pengangkutan, id_supplier, id_konsumer],(error, results) => {
+            [dataUpdate, id_pengangkutan, id_supplier, id_konsumer, nomor],(error, results) => {
                 if(error) throw error;
                 res.send({
                     success : true,
