@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { ekspedisi, produk, supplier, pengangkutan, konsumer } = require('../controllers/');
+const { ekspedisi, produk, supplier, pengangkutan, konsumer, _user } = require('../controllers/');
 
 router.get('/ekspedisi', ekspedisi.get);
 router.get('/ekspedisi/:nomor', ekspedisi.getnomor);
@@ -30,5 +30,11 @@ router.get('/konsumer/:id', konsumer.getid);
 router.post('/konsumer/add', konsumer.add);
 router.put('/konsumer/update/:id', konsumer.update);
 router.delete('/konsumer/delete/:id', konsumer.delete);
+
+router.get('/_user', _user.get);
+router.get('/_user/:id', _user.getid);
+router.post('/_user/add', _user.add);
+router.put('/_user/update/:id', _user.update);
+router.delete('/_user/delete/:id', _user.delete);
 
 module.exports = router;
