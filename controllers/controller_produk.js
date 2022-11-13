@@ -42,12 +42,15 @@ module.exports = {
         let dataAdd = {
             id : req.body.id,
             nama : req.body.nama,
-            jumlah: req.body.jumlah
+            jumlah: req.body.jumlah,
+            harga: req.body.harga
         }
+        let Create_by = req.body.Create_by
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query (`insert into produk set ?`,
-            [dataAdd],(error, results) => {
+            conn.query (`insert into produk set ?,
+            Create_by = (select id from _user where id = ?)`,
+            [dataAdd, Create_by],(error, results) => {
                 if(error) throw error;
                 res.send({
                     success : true,
@@ -62,13 +65,16 @@ module.exports = {
     update(req,res){
         let dataUpdate = {
             nama : req.body.nama,
-            jumlah: req.body.jumlah
+            jumlah: req.body.jumlah,
+            harga: req.body.harga
         }
         let id = req.params.id
+        let Update_by = req.body.Update_by
         pool.getConnection((err, conn) => {
             if (err) throw err;
-            conn.query (`update produk set ? where id = ?`,
-            [dataUpdate, id],(error, results) => {
+            conn.query (`update produk set ?,
+            Update_by = (select id from _user where id= ?) where id = ?`,
+            [dataUpdate, Update_by, id],(error, results) => {
                 if(error) throw error;
                 res.send({
                     success : true,
